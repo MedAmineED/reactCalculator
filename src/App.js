@@ -4,11 +4,12 @@ import {Button, OperationBtn, AcAndDeletBtn} from './components/ClcBtn';
 
 
 
+
+
 class App extends React.Component {
           constructor (props) {
             super(props);
-            this.state =  { num : this.props.num,
-                            numberStr : '',
+            this.state =  {numberStr : '',
                             result : 0 };
             this.number = 0;
             this.allNums = [];
@@ -31,25 +32,40 @@ class App extends React.Component {
           calculateNums(op, num) {
                this.allNums.push(parseInt(num));
                this.allNums.push(op);
-               console.log("array og all nums", this.allNums);
               if (op === "="){
-                this.myResult = this.allNums[0];
-                  for(let i =0; i<this.allNums.length; i++) {
-                      if (this.allNums[i] === "+") {
-                                this.myResult += this.allNums[i+1]
-                          }else if(this.allNums[i] === "-") { 
-                                this.myResult -= this.allNums[i+1]
-                          }else if(this.allNums[i] === "x") {
-                                this.myResult = this.myResult * this.allNums[i+1]
-                          }else if (this.allNums[i] === "/"){
-                            this.myResult =this.myResult / this.allNums[i+1]
-                      } 
+                  let currentOperator = '+';
+                  let tempResult = 0;
+                
+                  for (let i = 0; i < this.allNums.length; i++) {
+                    const elem = this.allNums[i];
+                
+                    if (typeof elem === 'number') {
+                      if (currentOperator === '+') {
+                        this.myResult += tempResult; 
+                        tempResult = elem; 
+                      } else if (currentOperator === '-') {
+                        tempResult -= elem; 
+                      }else if (currentOperator === 'x') {
+                        tempResult *= elem; 
+                      } else if (currentOperator === '/') {
+                        tempResult /= elem; 
+                      }
+                    } else if (typeof elem === 'string') {
+                      currentOperator = elem; 
+                      if (currentOperator === '+') {
+                        this.myResult += tempResult; 
+                        tempResult = 0; 
+                      }
+                    }
                   }
+                  this.myResult += tempResult;
+      
                   this.allNums=[];
-                  this.setState((state, props)=> {
-                     return { result : this.myResult }})
+                  this.setState(()=> {
+                     return { result : this.myResult,
+                               numberStr : '0'  
+                              }})
                 }
-              console.log("result " + this.myResult);
               this.number = 0;
           }
           

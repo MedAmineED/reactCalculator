@@ -1,5 +1,4 @@
 import React from 'react';
-// import App from '../App';
 
 
 class Button extends React.Component {
@@ -11,7 +10,12 @@ class Button extends React.Component {
   }
   
   handleClick() {
-        if(this.props.func)this.props.func(this.props.value)
+
+        if(this.props.func && this.props.value !== "x"){
+            this.props.func(this.props.value)
+        }else if(this.props.func && this.props.value === "x") {
+            this.props.func("*")
+        }
     }
 
   render () {
@@ -26,20 +30,11 @@ class Button extends React.Component {
 
 
 class OperationBtn extends Button {
-    // constructor(props) {
-    //     super(props);
-    //     this.operation = props.operation;
-    // }
-    // handleClick() {
-    //     this.operation(this.props.value)
-    // }
+    //I used a class to give each button a name that reflects its function, and to allow for adding features to this component in the future.
 }
 
 class AcAndDeletBtn extends Button {
-    // constructor(props) {
-    //     super(props);
-    //     this.className = props.className;
-    // }
+    //I used a class to give each button a name that reflects its function, and to allow for adding features to this component in the future.
 }
 
 export  {Button, OperationBtn, AcAndDeletBtn}

@@ -10,7 +10,6 @@ class Button extends React.Component {
   }
   
   handleClick() {
-
         if(this.props.func && this.props.value !== "x"){
             this.props.func(this.props.value)
         }else if(this.props.func && this.props.value === "x") {

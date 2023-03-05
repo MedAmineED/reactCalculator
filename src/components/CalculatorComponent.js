@@ -5,11 +5,25 @@ class Calculator extends React.Component {
     constructor (props) {
         super(props);
         this.state =  {numberStr : '',
-                        oneClick : "isBlocket" };
+                        oneClick : "isBlocket",
+                        result : 0 };
         this.myResult = 0;
         this.createNumber = this.createNumber.bind(this);
+        this.deletNumber = this.deletNumber.bind(this);
+        this.clearAll = this.clearAll.bind(this)
       }
-      
+      deletNumber () {
+            let newNumber = this.state.numberStr.substring(0, this.state.numberStr.length-1);
+            this.setState(()=>{
+              return {numberStr : newNumber}
+            })
+      }
+      clearAll() {
+        this.setState(()=>{
+          return {numberStr : '',
+                  result : 0}
+        })
+      }
       createNumber(strN) {
             this.clickOneTimeOnOperator(strN)
             if(strN !== '=') {
@@ -51,8 +65,8 @@ class Calculator extends React.Component {
                         <div className='previous-operand'>{this.state.numberStr}</div>
                         <div className='current-operand'>{this.state.result}</div>
                     </div>
-                    <AcAndDeletBtn value = "AC" className='span-two'/>
-                    <AcAndDeletBtn value ="DEL" />
+                    <AcAndDeletBtn value = "AC" className='span-two'func = {this.clearAll}/>
+                    <AcAndDeletBtn value ="DEL" func = {this.deletNumber}/>
                     <OperationBtn className={this.state.oneClick} value = "/" func = {this.createNumber}/>
                     <Button value = {1} func = {this.createNumber}/>
                     <Button value = {2} func = {this.createNumber}/>
